@@ -26,8 +26,12 @@ public class UserController {
     private final UserService userService;
     @GetMapping("/health-check")
     public String status(){
-        return String.format("It's working in user service on Port : %s",
-                env.getProperty("local.server.port")); // 포트 번호 출력
+        return String.format("It's working in user service"
+                + ", port(local.server.port) = " +  env.getProperty("local.server.port")
+                + ", port(server.port) = " +  env.getProperty("server.port")
+                + ", port(token.secret) = " +  env.getProperty("token.secret")
+                + ", port(token.expiration time) = " +  env.getProperty("token.expiration_time")
+               );
     }
     @GetMapping("/welcome")
     public String welcome(){
@@ -67,12 +71,12 @@ public class UserController {
     }
 
     @GetMapping("/users/{userId}")
-    public ResponseEntity<ResponseUser> getUser(@PathVariable String userId ){
-        UserDto findUser = userService.getUserByUserId(userId);
-        ModelMapper mapper = new ModelMapper();
-        ResponseUser result = mapper.map(findUser, ResponseUser.class);
+    public ResponseEntity<ResponseUser> getUser(@PathVariable String userId) {
+        UserDto userDto = userService.getUserByUserId(userId);
 
-        return ResponseEntity.status(HttpStatus.OK).body(result);
+        ResponseUser returnValue = new ModelMapper().map(userDto, ResponseUser.class);
+
+        return ResponseEntity.status(HttpStatus.OK).body(returnValue);
     }
 
 }
