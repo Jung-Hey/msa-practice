@@ -68,7 +68,9 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
                                             FilterChain chain,
                                             Authentication authResult) throws IOException, ServletException {
         log.info("------------------------------------");
+        log.info("secret!");
         log.info(env.getProperty("token.secret"));
+        log.info("time!");
         log.info(env.getProperty("token.expiration_time"));
         String userName = ((User)authResult.getPrincipal()).getUsername();
         UserDto userDetails = userService.getUserDetailsByEmail(userName);

@@ -31,7 +31,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         //http.authorizeRequests().antMatchers("/users/**").permitAll();
         http.authorizeRequests().antMatchers("/actuator/**").permitAll();
         http.authorizeRequests().antMatchers("/**") // 제약조건 1.  모든요청 통과 X
-                .hasIpAddress("192.168.219.141") // 제약조건 2. 통과시킬 IP
+                .hasIpAddress("10.10.10.95") // 제약조건 2. 통과시킬 IP
                 .and()
                 .addFilter(getAuthenticationFilter());// 제약조건 3. 이 필터 통과해야 권한 부여함
 
